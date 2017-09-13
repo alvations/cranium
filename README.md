@@ -172,7 +172,7 @@ QnA
 
 **Q: Don't we still have to write the `docopt` docstring in Python to read our customized arguments options?**
 
-**A:** Yes, doesn't that make you arguments parsing the `--help` messages more beautiful?
+**A:** Yes, doesn't that make your arguments parsing and the `--help` messages more beautiful?
 
 
 Similar / Related to
