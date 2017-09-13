@@ -18,23 +18,22 @@ apt-get install pip # `brew install pip` for Mac OS
 pip install docopt
 ```
 
-Usage
+Usage (**TL;DR**)
 ====
 
-**TL;DR**
+Writes a Python script with docopt to parse your arguments, e.g. see barathrum.py
 
 ```
-# Writes a Python script with docopt to parse your arguments, e.g. see barathrum.py
-
 $ python barathrum.py
 Usage:
   barathrum.py FILE [-g BASHLVL] [-e HASTELVL] [-d] [-n]
   barathrum.py (-h | --help)
   barathrum.py --version
+```
 
+Make the Python script output a JSON file with the variable-value pairs, e.g.
 
-# Make the Python script output a JSON file with the variable-value pairs, e.g.
-
+```
 $ python barathrum.py ancientscroll.txt -g 5 -n -d
 {"dagger": true, "version": false, "nether_strike": true, "greater_bash": "5", "FILE": "ancientscroll.txt", "empower_haste": "1", "help": false}
 
@@ -42,34 +41,37 @@ $ python barathrum.py ancientscroll.txt -g 5 -n -d > arguments.json
 
 $ cat arguments.json
 {"dagger": true, "version": false, "nether_strike": true, "greater_bash": "5", "FILE": "ancientscroll.txt", "empower_haste": "1", "help": false}
+```
+
+In your shell script pass the `"$@"` arguments to the Python script to output a json.
+
+```
+#!/bin/bash
+
+python barathrum.py "$@" > arguments.json
+
+while read -r name value; do
+   declare "$name=$value"
+done < <(cat arguments.json | jq -r 'to_entries[] | "\(.key) \(.value)"')
+
+echo $dagger
+echo greater_bash
+echo empower_haste
+```
 
 
-# In your shell script pass the `"$@"` arguments to the Python script to output a json.
+Et voila!
 
-    #!/bin/bash
-
-    python barathrum.py "$@" > arguments.json
-
-    while read -r name value; do
-       declare "$name=$value"
-    done < <(cat arguments.json | jq -r 'to_entries[] | "\(.key) \(.value)"')
-
-    echo $dagger
-    echo greater_bash
-    echo empower_haste
-
-# Et voila!
-
+```
 $ bash cranium.sh ancientscroll.txt -g 5 -n -d
 true
 5
 1
-
 ```
 
-----
 
-**In Long**
+Usage (**In Long**)
+====
 
 **Step 1**:
 
