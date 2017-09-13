@@ -4,16 +4,15 @@
 python barathrum.py "$@" > arguments.json
 
 # Initialize the arguments according.
-dagger=$(cat arguments.json | jq '.["dagger"]')
-greater_bash=$(cat arguments.json | jq '.["greater_bash"]')
-greater_bash=$(cat arguments.json | jq '.["greater_bash"]' | sed -e 's/^"//' -e 's/"$//')
+dagger=$(cat arguments.json | jq -r '.["dagger"]')
+greater_bash=$(cat arguments.json | jq -r '.["greater_bash"]')
 
 # Et voila!
 echo $dagger
 echo $greater_bash
 
 # You can change the variable name too!
-e=$(cat arguments.json | jq '.["empower_haste"]')
+e=$(cat arguments.json | jq -r '.["empower_haste"]')
 echo $e
 
 

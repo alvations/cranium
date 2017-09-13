@@ -129,8 +129,8 @@ Then, you can read the variables individually as such:
 
 ```shell
 # Initialize the arguments according.
-dagger=$(cat arguments.json | jq '.["dagger"]')
-greater_bash=$(cat arguments.json | jq '.["greater_bash"]')
+dagger=$(cat arguments.json | jq -r '.["dagger"]')
+greater_bash=$(cat arguments.json | jq -r '.["greater_bash"]')
 
 echo $dagger
 echo $greater_bash
