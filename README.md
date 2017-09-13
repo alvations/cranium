@@ -38,7 +38,7 @@ QnA
 
 ----
 
-**Q: Why don't you use [`argparse-bash`] that also uses Python?**
+**Q: Why don't you use [`argparse-bash`](https://github.com/nhoffman/argparse-bash) that also uses Python?**
 
 **A:** Cos I can't write my arguments `--help` message in the docstring.
 
