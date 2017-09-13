@@ -47,18 +47,23 @@ $ cat arguments.json
 # In your shell script pass the `"$@"` arguments to the Python script to output a json.
 
     #!/bin/bash
+
     python barathrum.py "$@" > arguments.json
-    dagger=$(cat arguments.json | jq '.["dagger"]')
-    greater_bash=$(cat arguments.json | jq '.["greater_bash"]')
+
+    while read -r name value; do
+       declare "$name=$value"
+    done < <(cat arguments.json | jq -r 'to_entries[] | "\(.key) \(.value)"')
+
     echo $dagger
-    echo $greater_bash
+    echo greater_bash
+    echo empower_haste
 
 # Et voila!
 
 $ bash cranium.sh ancientscroll.txt -g 5 -n -d
 true
-"5"
-"1"
+5
+1
 
 ```
 
@@ -71,7 +76,7 @@ true
 Create a Python file with arguments options and usage definitions that
 follows the Python `docopt` style guide, e.g. in `barathrum.py`:
 
-```python
+```shell
 Usage:
   barathrum.py FILE [-g BASHLVL] [-e HASTELVL] [-d] [-n]
   barathrum.py (-h | --help)
@@ -124,6 +129,20 @@ Then, you can read the variables individually as such:
 # Initialize the arguments according.
 dagger=$(cat arguments.json | jq '.["dagger"]')
 greater_bash=$(cat arguments.json | jq '.["greater_bash"]')
+
+echo $dagger
+echo $greater_bash
+```
+
+Or initialize them all at one go ([Credit goes to @chepner](https://stackoverflow.com/q/46187807/610569)):
+
+```shell
+while read -r name value; do
+   declare "$name=$value"
+done < <(cat arguments.json | jq -r 'to_entries[] | "\(.key) \(.value)"')
+
+echo $empower_haste
+echo $greater_bash
 ```
 
 
